@@ -1,12 +1,11 @@
 package org.selwyn.zioplayground
 
-import org.apache.kafka.common.serialization.Serde
-import org.apache.kafka.common.serialization.{Serde, Serdes}
 import zio.{App => ZApp}
 import zio.console._
 import zio.duration._
 import zio.kafka.client._
 import zio.kafka.client.Consumer
+import zio.kafka.client.serde.Serde
 
 @SuppressWarnings(
   Array(
@@ -28,12 +27,10 @@ object KafkaEntry extends ZApp {
       perPartitionChunkPrefetch = 2
     )
 
-  implicit val stringSerde: Serde[String] = Serdes.String()
-
   override def run(args: List[String]) =
     // Creates a kafka consumer that runs forever
     Consumer
-      .consumeWith[Console, String, String](Subscription.Topics(Set("test")), consumerSettings) {
+      .consumeWith(consumerSettings, Subscription.Topics(Set("test")), Serde.string, Serde.string) {
         case (key, value) => putStrLn(s"Received ${key}: ${value}")
       }
       .fold(_ => 1, _ => 0)

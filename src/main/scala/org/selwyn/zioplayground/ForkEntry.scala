@@ -2,7 +2,7 @@ package org.selwyn.zioplayground
 
 import java.util.concurrent.TimeUnit
 
-import zio.{URIO, ZIO, App => ZApp}
+import zio.{URIO, ZEnv, ZIO, App => ZApp}
 import zio.console._
 import zio.clock.Clock
 import zio.duration.Duration
@@ -14,7 +14,7 @@ object ForkEntry extends ZApp {
   val tasks: Int                    = 500
   val expectedLinearExecution: Long = latency * tasks
 
-  override def run(args: List[String]): ZIO[ForkEntry.Environment, Nothing, Int] = {
+  override def run(args: List[String]): ZIO[ZEnv, Nothing, Int] = {
     val start = System.currentTimeMillis()
     program.fold(
       _ => 1,

@@ -3,7 +3,7 @@ package org.selwyn.zioplayground
 import java.util.concurrent.TimeUnit
 
 import zio.clock.Clock
-import zio.{IO, Schedule, UIO, ZIO, App => ZApp}
+import zio.{IO, Schedule, UIO, ZEnv, ZIO, App => ZApp}
 import zio.console._
 import zio.duration._
 import zio.duration.Duration
@@ -13,7 +13,7 @@ object ScheduleEntry extends ZApp {
 
   type System = Console with Clock
 
-  override def run(args: List[String]): ZIO[ScheduleEntry.Environment, Nothing, Int] =
+  override def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
     program.fold(_ => 1, _ => 0)
 
   def getTime: UIO[String] =
