@@ -1,4 +1,4 @@
-package org.selwyn.zioplayground.logger
+package org.selwyn.zioplayground.service.logging
 
 import com.typesafe.scalalogging.Logger
 import zio.{IO, URIO}
