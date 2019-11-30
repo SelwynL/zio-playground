@@ -10,8 +10,8 @@ object Dependencies {
   object V {
     val logback   = "1.2.3"
     val logging   = "3.9.2"
-    val zio       = "1.0.0-RC15"
-    val zioKafka  = "0.3.0"
+    val zio       = "1.0.0-RC17"
+    val zioKafka  = "0.4.1"
     
     // Test
     val scalatest = "3.0.5"

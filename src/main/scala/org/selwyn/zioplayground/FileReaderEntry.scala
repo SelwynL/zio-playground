@@ -12,7 +12,7 @@ import zio.internal.PlatformLive
 object FileReaderEntry extends App {
 
   val filename = ".gitignore"
-  val timeout = 4.seconds
+  val timeout  = 4.seconds
 
   // The leveraged modules by the program (the traits used)
   type AppEnv = Console with Clock with Files
@@ -30,11 +30,8 @@ object FileReaderEntry extends App {
   val runtime: ZRuntime[AppEnv] = ZRuntime(live, PlatformLive.Default)
 
   // Run the entire program with the "Live" implementation
-  val result: Int = runtime.unsafeRun(program.fold(err => {
+  runtime.unsafeRun(program.fold(err => {
     System.err.println(s"Error: $err")
     1
   }, _ => 0))
-
-  // Exit according to the result of the program
-  sys.exit(result)
 }

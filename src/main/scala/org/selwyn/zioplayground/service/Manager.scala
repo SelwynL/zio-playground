@@ -26,8 +26,10 @@ object Manager {
     val console: Console.Service[Any]
 
     final val manager: Service[Any] = new Service[Any] {
+
       // Grab state from file, failure to grab anything but a START results in a STOP
       // TODO: leverage "id"
+      @SuppressWarnings(Array("org.wartremover.warts.Any"))
       override def state(id: String): ZIO[Any, Nothing, State] =
         files
           .read("status")
@@ -40,8 +42,8 @@ object Manager {
               console.putStrLn(s"[INFO] Read status content: ${content}")
               if (content.equalsIgnoreCase("START")) Start() else Stop()
             }
-        )
-      }
+          )
+    }
   }
 
   object Live extends Live with Files.Live with Console.Live

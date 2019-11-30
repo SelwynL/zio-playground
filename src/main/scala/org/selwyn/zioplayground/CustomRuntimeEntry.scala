@@ -26,8 +26,5 @@ object CustomRuntimeEntry extends App {
   val runtime: ZRuntime[AppEnv] = ZRuntime(live, PlatformLive.Default)
 
   // Run the entire program with the "Live" implementation
-  val result: Int = runtime.unsafeRun(program.fold(_ => 1, _ => 0))
-
-  // Exit according to the result of the program
-  sys.exit(result)
+  runtime.unsafeRun(program.map(_ => 0))
 }
