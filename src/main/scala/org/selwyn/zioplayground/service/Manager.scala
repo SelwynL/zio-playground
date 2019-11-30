@@ -25,10 +25,10 @@ object Manager {
     val files: Files.Service[Any]
     val console: Console.Service[Any]
 
-    final val manager: Service[Any] =
+    final val manager: Service[Any] = new Service[Any] {
       // Grab state from file, failure to grab anything but a START results in a STOP
       // TODO: leverage "id"
-      (id: String) =>
+      override def state(id: String): ZIO[Any, Nothing, State] =
         files
           .read("status")
           .fold(
@@ -41,6 +41,7 @@ object Manager {
               if (content.equalsIgnoreCase("START")) Start() else Stop()
             }
         )
+      }
   }
 
   object Live extends Live with Files.Live with Console.Live

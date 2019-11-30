@@ -10,6 +10,10 @@ import zio.internal.PlatformLive
 
 @SuppressWarnings(Array("org.wartremover.warts.Any", "org.wartremover.warts.NonUnitStatements"))
 object FileReaderEntry extends App {
+
+  val filename = ".gitignore"
+  val timeout = 4.seconds
+
   // The leveraged modules by the program (the traits used)
   type AppEnv = Console with Clock with Files
 
@@ -17,9 +21,9 @@ object FileReaderEntry extends App {
   // TODO: repeat this to read continuous file changes, fail on error
   val program: ZIO[AppEnv, Throwable, Unit] =
     (for {
-      contents <- files.read(".gitignore")
-      _        <- putStrLn(s"Contents: $contents")
-    } yield ()).repeat(Schedule.spaced(2.seconds)).unit
+      contents <- files.read(filename)
+      _        <- putStrLn(s"Contents:\n$contents\n--------------------------------------------------")
+    } yield ()).repeat(Schedule.spaced(timeout)).unit
 
   // Define the runtime effects implementation, which associates implementations of the traits defined in "AppEnv"
   val live: AppEnv              = new Console.Live with Clock.Live with Files.Live

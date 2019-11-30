@@ -13,12 +13,22 @@ To run this application
 ```
 sbt clean run
 ```
+This provides the option to run on eof the below programs
 
-# Build Artifact
-To build a fat JAR which includes all dependencies
-```
-sbt clean assembly
-```
+### CustomRuntimeEntry
+Uses module pattern to compose a `Manager`  which performs file lookup and console logging leveraging `Files` and `Console` programs
+
+### FileReaderEntry
+Reads the given file `.gitignore` every 4 seconds and outputs the file contents
+
+### ForkEntry
+Leverages `forkAll` to fork `500` green threads that each sleep for `100ms` then return their assigned number to be joined into a `List[Int]`
+
+### KafkaEntry
+Kafka client that listens to topic `test` on `localhost:9092` and output the received events
+
+### ScheduleEntry
+Leverages `Schedule` to output the time every 2 seconds
 
 # Plugins
 - scalafmt: https://scalameta.org/scalafmt/

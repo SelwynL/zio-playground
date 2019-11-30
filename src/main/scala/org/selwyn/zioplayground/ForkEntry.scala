@@ -10,7 +10,7 @@ import zio.duration.Duration
 @SuppressWarnings(Array("org.wartremover.warts.Any"))
 object ForkEntry extends ZApp {
 
-  val latency: Long                 = 120l
+  val latency: Long                 = 100l
   val tasks: Int                    = 500
   val expectedLinearExecution: Long = latency * tasks
 
